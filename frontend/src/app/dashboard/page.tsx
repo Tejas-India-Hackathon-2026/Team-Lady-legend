@@ -19,6 +19,35 @@ export default function DashboardPage() {
   const { user, role } = useAuth();
   const { t } = useLanguage();
 
+  const defaultFarmMetrics = {
+    soilMoisture: 68,
+    temperature: 27,
+    humidity: 72,
+    soilPh: 6.5,
+    nitrogen: 72,
+    phosphorus: 65,
+    potassium: 78,
+    cropHealth: 88,
+  };
+
+  const calculateHealthScore = (metrics: typeof defaultFarmMetrics) => {
+    const temperatureScore = Math.max(0, Math.min(100, 100 - Math.abs(metrics.temperature - 27) * 8));
+    const soilPhScore = Math.max(0, Math.min(100, 100 - Math.abs(metrics.soilPh - 6.5) * 35));
+
+    const weightedScore = (
+      metrics.cropHealth * 0.30 +
+      metrics.soilMoisture * 0.16 +
+      metrics.humidity * 0.12 +
+      metrics.nitrogen * 0.12 +
+      metrics.phosphorus * 0.10 +
+      metrics.potassium * 0.11 +
+      temperatureScore * 0.09 +
+      soilPhScore * 0.10
+    ) / 1.10;
+
+    return Math.round(weightedScore);
+  };
+
   // Recharts Health Trend Data
   const healthData = [
     { date: 'Aug 01', health: 64, diseaseRisk: 28, waterStress: 30 },
@@ -27,6 +56,20 @@ export default function DashboardPage() {
     { date: 'Aug 15', health: 79, diseaseRisk: 12, waterStress: 18 },
     { date: 'Aug 18', health: 82, diseaseRisk: 7,  waterStress: 18 },
   ];
+
+  const [farmMetrics, setFarmMetrics] = useState(defaultFarmMetrics);
+  const currentHealthScore = calculateHealthScore(farmMetrics);
+  const getHealthStatus = (score: number) => {
+    if (score >= 80) return { label: 'Healthy', color: 'text-emerald-400', pill: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' };
+    if (score >= 60) return { label: 'Needs Attention', color: 'text-amber-400', pill: 'bg-amber-500/10 border-amber-500/30 text-amber-300' };
+    return { label: 'Critical', color: 'text-red-400', pill: 'bg-red-500/10 border-red-500/30 text-red-300' };
+  };
+
+  const healthStatus = getHealthStatus(currentHealthScore);
+
+  const handleMetricChange = (key: keyof typeof defaultFarmMetrics, value: number) => {
+    setFarmMetrics((prev) => ({ ...prev, [key]: Number(value) }));
+  };
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] bg-slate-950">
@@ -41,7 +84,7 @@ export default function DashboardPage() {
               Welcome to Agrivision, {user?.full_name || 'Rammohan kumar'} 👋
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Your farm is Healthy and ready for smart farming. <strong>82/100 Health Score</strong> across 12.5 acres in Patna.
+              Your farm is <span className={healthStatus.color}>{healthStatus.label}</span> and ready for smart farming. <strong>{currentHealthScore}/100 Health Score</strong> across 12.5 acres in Patna.
             </p>
           </div>
 
@@ -71,11 +114,12 @@ export default function DashboardPage() {
           <div className="flex items-center gap-4">
             <div className="text-center px-4 py-2 bg-emerald-900/80 rounded-xl border border-emerald-500/50">
               <span className="text-[10px] text-emerald-300 block uppercase font-mono">Overall Score</span>
-              <strong className="text-3xl font-black text-emerald-400">82 / 100</strong>
+              <strong className="text-3xl font-black text-emerald-400">{currentHealthScore} / 100</strong>
             </div>
             <div className="space-y-1">
               <div className="font-bold text-white text-sm">Farm Status Summary</div>
               <div className="flex items-center gap-3 text-xs">
+                <span className={`font-semibold ${healthStatus.color}`}>{healthStatus.label}</span>
                 <span className="text-emerald-400 font-semibold">🟢 Healthy: 78%</span>
                 <span className="text-amber-400 font-semibold">🟡 Warning: 15%</span>
                 <span className="text-red-400 font-semibold">🔴 High Risk: 7%</span>
@@ -116,7 +160,14 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           {/* Health Gauge Card */}
-          <HealthGaugeCard score={82} healthyPct={78} warningPct={15} riskPct={7} />
+          <HealthGaugeCard
+            score={currentHealthScore}
+            healthyPct={78}
+            warningPct={15}
+            riskPct={7}
+            metrics={farmMetrics}
+            onMetricChange={handleMetricChange}
+          />
 
           {/* Recharts Long-Term Crop Health Trend */}
           <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">

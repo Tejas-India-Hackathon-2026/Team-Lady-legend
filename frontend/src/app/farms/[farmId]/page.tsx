@@ -82,7 +82,23 @@ export default function FarmDetailsPage() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <HealthGaugeCard score={82} healthyPct={78} warningPct={15} riskPct={7} />
+              <HealthGaugeCard
+                score={82}
+                healthyPct={78}
+                warningPct={15}
+                riskPct={7}
+                metrics={{
+                  soilMoisture: 68,
+                  temperature: 27,
+                  humidity: 72,
+                  soilPh: 6.5,
+                  nitrogen: 72,
+                  phosphorus: 65,
+                  potassium: 78,
+                  cropHealth: 88,
+                }}
+                onMetricChange={() => undefined}
+              />
               <div className="lg:col-span-2 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
                 <FarmMap />
               </div>
