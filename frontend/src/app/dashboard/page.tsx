@@ -38,7 +38,7 @@ export default function DashboardPage() {
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
-              Welcome, {user?.full_name || 'Rammohan kumar'} 👋
+              Welcome to Agrivision, {user?.full_name || 'Rammohan kumar'} 👋
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
               Your farm condition is overall stable. <strong>82/100 Health Score</strong> across 12.5 acres in Patna.
