@@ -14,7 +14,7 @@ class DiseaseDetector:
         # Common diseases by crop type
         crop_diseases = {
             "Wheat": [("Yellow Rust (Puccinia striiformis)", 0.92, 7.4), ("Septoria Leaf Blotch", 0.88, 12.1)],
-            "Paddy / Rice": [("Bacterial Leaf Blight", 0.89, 8.5), ("Blast Disease", 0.94, 15.2)],
+            "Paddy (Rice)": [("Bacterial Leaf Blight", 0.89, 8.5), ("Blast Disease", 0.94, 15.2)],
             "Maize / Corn": [("Common Rust", 0.91, 6.2), ("Northern Corn Leaf Blight", 0.85, 10.0)],
             "Potato": [("Late Blight (Phytophthora)", 0.95, 18.3), ("Early Blight", 0.87, 5.5)],
             "Cotton": [("Cotton Leaf Curl Virus", 0.90, 9.1), ("Bacterial Blight", 0.86, 11.4)],

@@ -153,7 +153,7 @@ export default function FarmsPage() {
                       className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white"
                     >
                       <option value="Wheat">Wheat (गेहूँ)</option>
-                      <option value="Paddy / Rice">Paddy / Rice (धान)</option>
+                      <option value="Paddy (Rice)">Paddy (Rice) (धान)</option>
                       <option value="Maize">Maize / Corn (मक्का)</option>
                       <option value="Potato">Potato (आलू)</option>
                     </select>

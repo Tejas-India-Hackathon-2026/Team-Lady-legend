@@ -97,7 +97,7 @@ def seed_db():
             common_diseases=["Yellow Rust", "Septoria Leaf Blotch", "Powdery Mildew"]
         )
         crop_paddy = Crop(
-            name="Paddy / Rice",
+            name="Paddy (Rice)",
             ideal_temperature_min=20.0,
             ideal_temperature_max=35.0,
             ideal_humidity=80.0,
