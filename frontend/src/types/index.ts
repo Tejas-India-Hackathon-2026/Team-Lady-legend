@@ -86,3 +86,47 @@ export interface Recommendation {
   recommended_action: string;
   follow_up_days: number;
 }
+
+export interface FarmParameters {
+  soilMoisture: number;
+  temperature: number;
+  humidity: number;
+  soilPh: number;
+  nitrogen: number;
+  phosphorus: number;
+  potassium: number;
+  cropHealth: number;
+  rainfallMm?: number;
+  cropType?: string;
+}
+
+export type HealthStatus = 'Healthy' | 'Needs Attention' | 'Critical';
+
+export interface CropHealthInsight {
+  score: number;
+  status: HealthStatus;
+  confidence: number;
+  summary: string;
+  generatedFrom: string[];
+}
+
+export interface RiskInsight {
+  value: number;
+  status: 'Low Risk' | 'Needs Attention' | 'Critical';
+  confidence: number;
+  summary: string;
+}
+
+export interface WaterStressInsight {
+  value: number;
+  status: 'Low' | 'Moderate' | 'High';
+  irrigationRequired: boolean;
+  summary: string;
+}
+
+export interface AIRecommendation {
+  title: string;
+  detail: string;
+  severity: 'low' | 'medium' | 'high';
+  basedOn: string;
+}

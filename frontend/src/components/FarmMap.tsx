@@ -18,6 +18,13 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   const [selectedRegion, setSelectedRegion] = useState<any | null>(null);
   const [isClient, setIsClient] = useState(false);
 
+  const layerMeta = {
+    all: { label: 'Overall Farm Health', status: 'Healthy', value: '82/100' },
+    health: { label: 'Crop Health', status: 'Healthy', value: '86%' },
+    disease: { label: 'Disease Risk', status: 'Low Risk', value: '12%' },
+    water: { label: 'Water Stress', status: 'Low', value: '28%' }
+  } as const;
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -106,6 +113,16 @@ export const FarmMap: React.FC<FarmMapProps> = ({
           >
             🔵 Water Stress (18%)
           </button>
+        </div>
+      </div>
+
+      <div className="px-4 pt-3 pb-0 text-[11px] text-slate-300">
+        <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-slate-700 bg-slate-950/80 px-2.5 py-1">
+          <span className="text-slate-400">Current Layer:</span>
+          <span className="font-bold text-white">{layerMeta[activeLayer].label}</span>
+          <span className="text-emerald-300 font-semibold">{layerMeta[activeLayer].status}</span>
+          <span className="text-slate-400">•</span>
+          <span className="text-emerald-300 font-semibold">{layerMeta[activeLayer].value}</span>
         </div>
       </div>
 
