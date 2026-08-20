@@ -41,7 +41,7 @@ export default function DashboardPage() {
               Welcome to Agrivision, {user?.full_name || 'Rammohan kumar'} 👋
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Your farm condition is overall stable. <strong>82/100 Health Score</strong> across 12.5 acres in Patna.
+              Your farm is Healthy and ready for smart farming. <strong>82/100 Health Score</strong> across 12.5 acres in Patna.
             </p>
           </div>
 

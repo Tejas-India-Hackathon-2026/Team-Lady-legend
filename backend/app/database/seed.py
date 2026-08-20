@@ -22,7 +22,7 @@ def seed_db():
 
         # 1. Users & Roles
         farmer_user = User(
-            full_name="Rammohan kumar",
+            full_name="R",
             email="farmer@agrivision.ai",
             mobile_number="+919876543210",
             hashed_password=hash_password("farmer123"),
