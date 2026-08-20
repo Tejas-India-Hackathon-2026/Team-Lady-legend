@@ -20,8 +20,10 @@ import type {
   HealthStatus,
 } from '@/types';
 
+type FarmTabId = 'overview' | 'map' | 'scans' | 'diseases' | 'water' | 'weather' | 'recommendations' | 'history';
+
 export default function FarmDetailsPage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'map' | 'scans' | 'diseases' | 'water' | 'weather' | 'recommendations' | 'history'>('overview');
+  const [activeTab, setActiveTab] = useState<FarmTabId>('overview');
 
   const farmParameters: FarmParameters = {
     soilMoisture: 68,
@@ -103,7 +105,7 @@ export default function FarmDetailsPage() {
     };
   }, [farmParameters.soilMoisture]);
 
-  const tabs = [
+  const tabs: Array<{ id: FarmTabId; label: string; icon: typeof Map }> = [
     { id: 'overview', label: 'Overview', icon: Map },
     { id: 'map', label: 'Health Map', icon: Layers },
     { id: 'scans', label: 'Drone Scans', icon: Camera },
@@ -161,7 +163,7 @@ export default function FarmDetailsPage() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold whitespace-nowrap transition ${
                   isActive
                     ? 'bg-emerald-600 text-white shadow-md'

@@ -81,7 +81,7 @@ export default function DashboardPage() {
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
-              Welcome to Agrivision, {user?.full_name || 'Rammohan kumar'} 👋
+              Welcome to Agrivision, Mr. {user?.full_name ? (user.full_name.toLowerCase() === 'rammohan kumar' ? 'Rammohan Kumar' : user.full_name) : 'Rammohan Kumar'} 👋
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
               Your farm is <span className={healthStatus.color}>{healthStatus.label}</span> and ready for smart farming. <strong>{currentHealthScore}/100 Health Score</strong> across 12.5 acres in Patna.

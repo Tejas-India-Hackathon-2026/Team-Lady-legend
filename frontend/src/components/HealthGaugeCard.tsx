@@ -42,8 +42,9 @@ export const HealthGaugeCard: React.FC<HealthGaugeCardProps> = ({
   metrics,
   onMetricChange,
 }) => {
+  const safeScore = Math.max(0, Math.min(100, score));
   const circumference = 2 * Math.PI * 40;
-  const strokeDashoffset = circumference - (score / 100) * circumference;
+  const strokeDashoffset = circumference - (safeScore / 100) * circumference;
 
   const getHealthStatus = (value: number) => {
     if (value >= 80) {
@@ -73,7 +74,7 @@ export const HealthGaugeCard: React.FC<HealthGaugeCardProps> = ({
     };
   };
 
-  const status = getHealthStatus(score);
+  const status = getHealthStatus(safeScore);
   const isLowSoilMoisture = metrics.soilMoisture < 70;
 
   return (
@@ -89,7 +90,14 @@ export const HealthGaugeCard: React.FC<HealthGaugeCardProps> = ({
       </div>
 
       <div className="py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-around">
-        <div className="relative w-32 h-32 flex items-center justify-center mx-auto md:mx-0">
+        <div 
+          className="relative w-32 h-32 flex items-center justify-center mx-auto md:mx-0"
+          role="progressbar"
+          aria-valuenow={safeScore}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Farm Health Index: ${safeScore} out of 100`}
+        >
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
             <circle
               cx="50"
@@ -114,7 +122,7 @@ export const HealthGaugeCard: React.FC<HealthGaugeCardProps> = ({
           </svg>
           <div className="absolute flex flex-col items-center justify-center text-center">
             <span className={`text-3xl font-extrabold tracking-tight ${status.scoreColor}`}>
-              {score}
+              {safeScore}
             </span>
             <span className="text-[10px] text-slate-400 font-medium">/ 100</span>
           </div>
@@ -159,6 +167,7 @@ export const HealthGaugeCard: React.FC<HealthGaugeCardProps> = ({
                 max={max}
                 step={key === 'soilPh' ? 0.1 : 1}
                 value={metrics[key]}
+                aria-label={`${label} level`}
                 onChange={(event) => onMetricChange(key, Number(event.target.value))}
                 className="w-full accent-emerald-400"
               />

@@ -38,7 +38,7 @@ export default function RegisterPage() {
       village
     };
 
-    const res = await fetchApi('/auth/register', {
+    const res = await fetchApi<{ access_token: string; user: import('@/types').User }>('/auth/register', {
       method: 'POST',
       body: JSON.stringify(payload)
     });

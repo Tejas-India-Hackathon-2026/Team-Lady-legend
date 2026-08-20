@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { useLanguage } from '@/context/LanguageContext';
+import { fetchApi } from '@/lib/api';
 import { Bot, Mic, Send, Sparkles } from 'lucide-react';
 
 export default function AssistantPage() {
@@ -19,25 +20,32 @@ export default function AssistantPage() {
   ]);
   const [input, setInput] = useState('');
 
-  const handleSend = (text: string) => {
+  const handleSend = async (text: string) => {
     if (!text.trim()) return;
     const newMsgs = [...messages, { sender: 'user' as const, text }];
     setMessages(newMsgs);
     setInput('');
 
-    setTimeout(() => {
-      setMessages([
-        ...newMsgs,
-        {
-          sender: 'assistant',
-          text: language === 'bho'
-            ? "रउआ Green Valley Farm के सेहत स्कोर 82/100 बा। 7.4% हिस्सा में Yellow Rust बीमारी बा।"
-            : language === 'hi'
-            ? "आपके Green Valley Farm का स्वास्थ्य स्कोर 82/100 है। खेत के 7.4% क्षेत्र में पीला रतुआ देखा गया है।"
-            : "Your Green Valley Farm health score is 82/100. 7.4% of your wheat field has Yellow Rust disease."
-        }
-      ]);
-    }, 600);
+    const res = await fetchApi<{ reply?: string }>('/assistant/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message: text, language, farm_id: 1 })
+    });
+
+    const replyText = res?.reply || (
+      language === 'bho'
+        ? "रउआ Green Valley Farm के सेहत स्कोर 82/100 बा। 7.4% हिस्सा में Yellow Rust बीमारी बा।"
+        : language === 'hi'
+        ? "आपके Green Valley Farm का स्वास्थ्य स्कोर 82/100 है। खेत के 7.4% क्षेत्र में पीला रतुआ देखा गया है।"
+        : "Your Green Valley Farm health score is 82/100. 7.4% of your wheat field has Yellow Rust disease."
+    );
+
+    setMessages([
+      ...newMsgs,
+      {
+        sender: 'assistant',
+        text: replyText
+      }
+    ]);
   };
 
   return (

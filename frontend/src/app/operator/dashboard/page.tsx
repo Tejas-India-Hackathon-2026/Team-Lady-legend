@@ -19,13 +19,14 @@ export default function OperatorDashboardPage() {
     formData.append('crop_name', 'Wheat');
     if (file) formData.append('file', file);
 
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
     try {
-      await fetch('http://localhost:8000/api/analysis/upload', {
+      await fetch(`${baseUrl}/analysis/upload`, {
         method: 'POST',
         body: formData
       });
     } catch (e) {
-      console.warn("Using upload fallback");
+      console.warn("Using upload fallback", e);
     }
 
     setUploading(false);

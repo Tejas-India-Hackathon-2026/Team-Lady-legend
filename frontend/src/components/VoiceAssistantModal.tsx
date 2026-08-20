@@ -10,8 +10,33 @@ interface VoiceAssistantModalProps {
   onClose: () => void;
 }
 
+interface ISpeechRecognitionEvent {
+  results: {
+    [index: number]: {
+      [index: number]: {
+        transcript: string;
+      };
+    };
+  };
+}
+
+interface ISpeechRecognitionInstance {
+  lang: string;
+  interimResults: boolean;
+  onstart: () => void;
+  onresult: (event: ISpeechRecognitionEvent) => void;
+  onerror: () => void;
+  onend: () => void;
+  start: () => void;
+  stop: () => void;
+}
+
+interface ISpeechRecognitionConstructor {
+  new (): ISpeechRecognitionInstance;
+}
+
 export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen, onClose }) => {
-  const { language, setLanguage } = useLanguage();
+  const { language } = useLanguage();
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [inputText, setInputText] = useState('');
@@ -26,6 +51,14 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen
     }
   ]);
 
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   if (!isOpen) return null;
 
   const handleSendQuery = async (queryText: string) => {
@@ -36,7 +69,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen
     setInputText('');
 
     // Call API or AI assistant service
-    const res = await fetchApi('/assistant/chat', {
+    const res = await fetchApi<{ reply?: string }>('/assistant/chat', {
       method: 'POST',
       body: JSON.stringify({ message: queryText, language, farm_id: 1 })
     });
@@ -52,7 +85,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen
     setMessages([...newMsgs, { sender: 'assistant', text: replyText }]);
 
     // Text-To-Speech Synthesis
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(replyText);
       utterance.lang = language === 'en' ? 'en-IN' : 'hi-IN';
@@ -64,7 +97,11 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen
 
   const startVoiceInput = () => {
     if (isListening) return;
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const windowWithSpeech = window as unknown as {
+      SpeechRecognition?: ISpeechRecognitionConstructor;
+      webkitSpeechRecognition?: ISpeechRecognitionConstructor;
+    };
+    const SpeechRecognition = windowWithSpeech.SpeechRecognition || windowWithSpeech.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser. Please type your query.");
@@ -76,7 +113,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({ isOpen
     recognition.interimResults = false;
 
     recognition.onstart = () => setIsListening(true);
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: ISpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript;
       setIsListening(false);
       handleSendQuery(transcript);

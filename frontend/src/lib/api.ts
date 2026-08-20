@@ -5,7 +5,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/a
 // Demo Mode sample data
 export const DEMO_USER: User = {
   id: 1,
-  full_name: "Rammohan kumar",
+  full_name: "Rammohan Kumar",
   email: "farmer@agrivision.ai",
   mobile_number: "+919876543210",
   role: "farmer",
@@ -75,18 +75,18 @@ export const DEMO_WEATHER: WeatherData = {
   ]
 };
 
-export async function fetchApi(endpoint: string, options: RequestInit = {}) {
+export async function fetchApi<T = unknown>(endpoint: string, options: RequestInit = {}): Promise<T | null> {
   const token = typeof window !== 'undefined' ? localStorage.getItem('agri_token') : null;
-  const headers = {
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...options.headers,
+    ...(options.headers || {}),
   };
 
   try {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, { ...options, headers });
     if (!res.ok) throw new Error(`API Error ${res.status}`);
-    return await res.json();
+    return (await res.json()) as T;
   } catch (err) {
     console.warn(`API call failed for ${endpoint}, using fallback demo data`, err);
     return null;

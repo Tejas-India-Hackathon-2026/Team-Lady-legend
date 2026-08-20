@@ -13,6 +13,11 @@ export interface User {
   village?: string;
 }
 
+export interface GeoJsonPolygon {
+  type: 'Polygon' | 'MultiPolygon' | string;
+  coordinates: number[][][] | number[][][][] | number[][];
+}
+
 export interface Farm {
   id: number;
   name: string;
@@ -26,7 +31,7 @@ export interface Farm {
   planting_date?: string;
   soil_type?: string;
   irrigation_type?: string;
-  boundary_geojson?: any;
+  boundary_geojson?: GeoJsonPolygon | Record<string, unknown>;
   center_lat?: number;
   center_lng?: number;
   created_at?: string;

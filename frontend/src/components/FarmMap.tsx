@@ -3,6 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import { Layers, ShieldCheck, AlertTriangle, Droplets, Info } from 'lucide-react';
 
+type LayerKey = 'all' | 'health' | 'disease' | 'water';
+
+type Region = {
+  id: number;
+  name: string;
+  type: 'healthy' | 'disease' | 'water';
+  color: string;
+  borderColor: string;
+  area: string;
+  status: string;
+  details: string;
+};
+
 interface FarmMapProps {
   centerLat?: number;
   centerLng?: number;
@@ -14,11 +27,11 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   centerLng = 85.1240,
   interactive = true
 }) => {
-  const [activeLayer, setActiveLayer] = useState<'all' | 'health' | 'disease' | 'water'>('all');
-  const [selectedRegion, setSelectedRegion] = useState<any | null>(null);
+  const [activeLayer, setActiveLayer] = useState<LayerKey>('all');
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [isClient, setIsClient] = useState(false);
 
-  const layerMeta = {
+  const layerMeta: Record<LayerKey, { label: string; status: string; value: string }> = {
     all: { label: 'Overall Farm Health', status: 'Healthy', value: '82/100' },
     health: { label: 'Crop Health', status: 'Healthy', value: '86%' },
     disease: { label: 'Disease Risk', status: 'Low Risk', value: '12%' },
@@ -38,7 +51,7 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   }
 
   // Sample GeoJSON Zones for Green Valley Farm
-  const regions = [
+  const regions: Region[] = [
     {
       id: 1,
       name: "North Block A - Healthy Wheat Zone",

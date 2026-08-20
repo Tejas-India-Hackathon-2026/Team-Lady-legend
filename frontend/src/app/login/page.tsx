@@ -22,7 +22,7 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const res = await fetchApi('/auth/login', {
+    const res = await fetchApi<{ access_token: string; user: import('@/types').User }>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email_or_mobile: emailOrMobile, password })
     });
@@ -32,9 +32,17 @@ export default function LoginPage() {
       router.push('/dashboard');
     } else {
       // Demo Mode login fallback
+      const demoNames: Record<UserRole, string> = {
+        operator: 'Amit Singh (Pilot)',
+        expert: 'Dr. Ananya Sharma',
+        admin: 'System Admin',
+        farmer: 'Rahul Kumar',
+        fpo: 'FPO Coordinator'
+      };
+
       login('demo-jwt-token', {
         id: 1,
-        full_name: selectedRole === 'operator' ? 'Amit Singh (Pilot)' : selectedRole === 'expert' ? 'Dr. Ananya Sharma' : selectedRole === 'admin' ? 'System Admin' : 'Rahul Kumar',
+        full_name: demoNames[selectedRole] || 'Rahul Kumar',
         email: emailOrMobile,
         mobile_number: '+919876543210',
         role: selectedRole,

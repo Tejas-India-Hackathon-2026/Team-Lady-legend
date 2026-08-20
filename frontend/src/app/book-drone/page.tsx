@@ -15,7 +15,7 @@ export default function BookDronePage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const pricePerAcre = 200; // INR
+  const pricePerAcre = 1000; // INR (₹1,000 per acre)
   const totalPrice = areaAcres * pricePerAcre;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -144,11 +144,11 @@ export default function BookDronePage() {
             <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
               <div>
                 <span className="text-slate-400 block text-[11px]">Pay-Per-Scan Calculation</span>
-                <span className="text-white font-semibold">{areaAcres} acres × ₹{pricePerAcre}/acre</span>
+                <span className="text-white font-semibold">{areaAcres} acres × ₹{pricePerAcre.toLocaleString('en-IN')}/acre</span>
               </div>
               <div className="text-right">
                 <span className="text-slate-400 block text-[11px]">Estimated Price</span>
-                <strong className="text-2xl font-black text-emerald-400">₹{totalPrice}</strong>
+                <strong className="text-2xl font-black text-emerald-400">₹{totalPrice.toLocaleString('en-IN')}</strong>
               </div>
             </div>
 
@@ -157,7 +157,7 @@ export default function BookDronePage() {
               disabled={loading}
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-extrabold py-3.5 rounded-xl shadow-xl transition text-xs uppercase tracking-wider"
             >
-              {loading ? 'Submitting Booking...' : 'Confirm Drone Booking (₹' + totalPrice + ')'}
+              {loading ? 'Submitting Booking...' : `Confirm Drone Booking (₹${totalPrice.toLocaleString('en-IN')})`}
             </button>
 
           </form>
