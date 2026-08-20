@@ -28,7 +28,7 @@ export const ReportDownloadButton: React.FC<ReportDownloadButtonProps> = ({ farm
       doc.setTextColor(15, 23, 42);
       doc.setFontSize(12);
       doc.text(`Farm Name: ${farmName}`, 14, 52);
-      doc.text("Owner: Rahul Kumar", 14, 60);
+      doc.text("Owner: Rammohan kumar", 14, 60);
       doc.text("Location: Bihta, Patna, Bihar", 14, 68);
       doc.text("Crop: Wheat (HD-2967) - 12.5 Acres", 14, 76);
       doc.text("Scan Date: August 18, 2026", 14, 84);

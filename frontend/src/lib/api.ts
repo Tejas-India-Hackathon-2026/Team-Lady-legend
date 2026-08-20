@@ -5,7 +5,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/a
 // Demo Mode sample data
 export const DEMO_USER: User = {
   id: 1,
-  full_name: "Rahul Kumar",
+  full_name: "Rammohan kumar",
   email: "farmer@agrivision.ai",
   mobile_number: "+919876543210",
   role: "farmer",
