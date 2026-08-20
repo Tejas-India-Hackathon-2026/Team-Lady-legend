@@ -103,7 +103,7 @@ export default function LandingPage() {
 
                   <div className="absolute bottom-4 left-4 bg-slate-900/90 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold text-emerald-300 backdrop-blur-md flex items-center gap-2">
                     <Activity className="w-4 h-4 text-emerald-400 animate-spin" />
-                    <span>Farm Health Score: 82 / 100</span>
+                    <span>Overall Crop Health Score: 82/100</span>
                   </div>
                 </div>
 
