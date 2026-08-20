@@ -293,7 +293,7 @@ def seed_db():
         db.add_all([rec_1, rec_2])
         db.commit()
 
-        # Notifications
+       
         notif_1 = Notification(
             user_id=farmer_user.id,
             title="Scan Completed & AI Analysis Ready",
