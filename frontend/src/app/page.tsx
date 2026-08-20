@@ -28,19 +28,19 @@ export default function LandingPage() {
               
               <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full text-xs font-semibold">
                 <Sprout className="w-4 h-4 text-emerald-400" />
-                <span>Next-Gen Precision Agriculture for Rural India</span>
+                <span>AI + Drone Intelligence for Climate-Smart Farming</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
-                See Your Farm. <br />
+                Monitor Every Acre. <br />
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400 bg-clip-text text-transparent">
-                  Detect Problems Early.
+                  Detect Stress Early.
                 </span> <br />
-                Grow Smarter.
+                Grow with Confidence.
               </h1>
 
               <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-                AgriVision combines drone intelligence, AI-powered computer vision crop analysis, multi-layer farm health mapping, and voice assistance in <strong>Hindi, Bhojpuri, and English</strong> to help farmers protect yields and reduce input costs.
+                AgriVision helps farmers and agri-business teams identify crop disease, nutrient stress, and irrigation issues before losses escalate through <strong>drone imaging, AI analysis, and multilingual field guidance</strong> in Hindi, Bhojpuri, and English.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -49,14 +49,14 @@ export default function LandingPage() {
                   className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold px-6 py-3.5 rounded-xl shadow-xl shadow-emerald-950/60 hover:scale-105 transition-all text-sm"
                 >
                   <PlaneTakeoff className="w-5 h-5" />
-                  <span>Book a Drone Scan</span>
+                  <span>Schedule a Farm Scan</span>
                 </Link>
 
                 <Link
                   href="/dashboard"
                   className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-3.5 rounded-xl border border-slate-700 hover:border-emerald-500/50 transition-all text-sm"
                 >
-                  <span>Explore AgriVision</span>
+                  <span>View Live Dashboard</span>
                   <ArrowRight className="w-4 h-4 text-emerald-400" />
                 </Link>
               </div>
@@ -65,11 +65,11 @@ export default function LandingPage() {
               <div className="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800 text-xs">
                 <div>
                   <div className="font-extrabold text-xl text-emerald-400">91%</div>
-                  <div className="text-slate-400">AI Accuracy</div>
+                  <div className="text-slate-400">Disease Accuracy</div>
                 </div>
                 <div>
                   <div className="font-extrabold text-xl text-emerald-400">&lt; 15 min</div>
-                  <div className="text-slate-400">Scan to Analysis</div>
+                  <div className="text-slate-400">From Scan to Insight</div>
                 </div>
                 <div>
                   <div className="font-extrabold text-xl text-emerald-400">3 Langs</div>
