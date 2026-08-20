@@ -46,7 +46,7 @@ class AssistantService:
                 reply = f"Hello! AgriVision AI is actively monitoring '{farm_name}'. Feel free to ask about crop disease, water stress maps, drone scan schedules, or weather advisories."
 
         suggested_actions = [
-            "View Farm Health Map",
+            "View Farm Health",
             "Book Follow-up Scan",
             "Download PDF Report"
         ]

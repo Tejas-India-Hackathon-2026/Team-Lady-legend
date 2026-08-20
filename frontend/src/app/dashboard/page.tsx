@@ -51,7 +51,7 @@ export default function DashboardPage() {
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/40 px-4 py-2.5 rounded-xl font-bold text-xs shadow transition"
             >
               <Layers className="w-4 h-4" />
-              <span>View Farm Health Map</span>
+              <span>View Farm Health</span>
             </Link>
 
             <Link
